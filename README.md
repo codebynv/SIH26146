@@ -18,7 +18,7 @@
 
 **The live working demonstration of BitTrace AI will be published here.**
 
-**YouTube Demo:** Link will be added here when the live demo is published.
+**YouTube Demo:** https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP
 
 </div>
 
@@ -758,9 +758,9 @@ PHASE 09 ─ Demo
 
 ### 📺 YouTube
 
-**Live demo video link will be added here.**
+**Live demo / project channel:** https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP
 
-[🔴 YouTube Demo — Coming Soon](https://youtube.com/)
+[🔴 YouTube — Coding](https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP)
 
 </div>
 
