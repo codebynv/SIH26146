@@ -1,5 +1,11 @@
 <div align="center">
 
+[![YouTube](https://img.shields.io/badge/YouTube-Live%20Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP)
+
+</div>
+
+<div align="center">
+
 # 🧠 BitTrace AI
 
 ### Cross-Layer AI Platform for Bitcoin Transaction Investigation
