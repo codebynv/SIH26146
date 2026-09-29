@@ -195,27 +195,13 @@ The core workflow is designed for Linux and controlled environments using local/
 
 # 🏗️ Solution Architecture
 
-~~~mermaid
-flowchart LR
-A["📥 Network Data<br/>CSV / JSON / XML"]
-B["₿ Blockchain Data<br/>TXID / Wallet / Amount"]
-C["⚙️ Normalization<br/>Validation + Deduplication"]
-D["🔗 Cross-Layer<br/>Correlation"]
-E["🕸️ Evidence Graph<br/>Entities + Relationships"]
-F["🧠 AI / ML + Graph<br/>Intelligence"]
-G["🎯 Evidence Fusion<br/>Risk Scoring"]
-H["🔎 Investigation Layer<br/>Leads + Evidence"]
-I["📊 Dashboard<br/>Graph + Reports"]
+<div align="center">
 
-A --> C
-B --> C
-C --> D
-D --> E
-E --> F
-F --> G
-G --> H
-H --> I
-~~~
+![BitTrace AI Solution Architecture](docs/architecture.svg)
+
+**Network + Blockchain → Correlation → Evidence Graph → AI/ML → Explainable Risk → Investigation**
+
+</div>
 
 ---
 
