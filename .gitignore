@@ -1,0 +1,42 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+# Pytest cache
+.pytest_cache/
+# Node artifacts
+node_modules/
+/dist/
+.vite/
+# Environment files
+.env
+.env.*
+!.env.example
+# IDE settings
+.vscode/
+.idea/
+# OS files
+.DS_Store
+Thumbs.db
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+
+# Generated evaluation output. The stored expectation under
+# evaluation/expected/ is deliberately NOT ignored: it is the reviewed contract
+# the suite compares against, and it must be committed to change deliberately.
+evaluation/reports/
+
+# Scratch files left at the repository root by earlier editing sessions.
+fix.py
+patch.py
+test_api.py
+tmp_code.py
+tmp_ec3.js
+tmp_evidence_block.txt
+tmp_old.txt
+tmp_patch.txt
+_probe_css.py

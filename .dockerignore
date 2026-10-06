@@ -1,0 +1,59 @@
+# Keep the build context small and the image free of anything that is not
+# needed at runtime.
+
+# Version control and CI
+.git
+.gitignore
+.github
+
+# Secrets and local environment
+.env
+.env.*
+*.pem
+*.key
+
+# Python build and cache artifacts. .venv must not leak in: the image builds
+# its own environment, and copying a host virtualenv would carry absolute paths
+# and a different platform's compiled extensions.
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node tooling
+node_modules/
+dist/
+.vite/
+
+# Editor and OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Tests, frontend and documentation are excluded from the runtime image.
+tests/
+frontend/
+docs/
+*.md
+
+# Editor scratch files left at the repository root by earlier work.
+fix.py
+patch.py
+test_api.py
+tmp_code.py
+tmp_ec3.js
+tmp_evidence_block.txt
+tmp_old.txt
+tmp_patch.txt
+_probe_css.py
+
+# Generated artefacts. The stored expectation under evaluation/expected is NOT
+# ignored: it is the reviewed contract and must ship with the image.
+evaluation/reports/
