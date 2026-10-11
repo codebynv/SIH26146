@@ -1,254 +1,816 @@
-# BitTrace AI
+<div align="center">
 
-**SIH26146 - AI-Powered Monitoring & Analysis of Bitcoin Transaction Traffic**
+[![YouTube](https://img.shields.io/badge/YouTube-Live%20Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP)
 
-### Project Description
+</div>
 
-BitTrace AI is an offline, open-source investigative intelligence platform built for the
-**Smart India Hackathon 2026** challenge *SIH26146*. It ingests raw network and blockchain
-data, validates and normalises it, correlates network traffic against on-chain activity,
-derives behavioural profiles, scores anomaly risk, and serves the result to a dashboard
-API. Every stage runs on-device with no cloud dependency.
+<div align="center">
 
-### Development Status
+# 🧠 BitTrace AI
 
-| Step | Component | Status |
-|------|-----------|--------|
-| 1 | Foundation: FastAPI app, `/`, `/health`, package layout | Implemented |
-| 2 | Ingestion engine: content-based format detection, CSV/JSON/XML parsers, aliases, per-field validation, provenance, conservative deduplication, secure uploads, `POST /ingest` | Implemented |
-| 3 | Unified data model: immutable Pydantic models, observation classification, `normalized_to_unified` adapter | Implemented |
-| 4A | Evidence identity: canonical evidence model and content-derived identity | Implemented |
-| 4B | Correlation engine: rule definitions and evaluation, provenance recording | Implemented |
-| 4C | Evidence graph: graph models and builder | Implemented |
-| 5 | Behavioural analysis: feature construction, models, profiles | Implemented |
-| 6 | ML: preprocessing, anomaly scoring, clustering, explanations | Implemented |
-| 7 | Investigation engine: path search, temporal comparison | Implemented |
-| 8 | Fusion and explainability: signals, monotonic priority fusion, explanations | Implemented |
-| 9A | Dashboard API: read-only endpoints over the fused result | Implemented |
-| 9B | Frontend: navigation, search, graph, evidence, paths | Implemented |
-| 10 | Evaluation: deterministic offline harness, expected outputs, reports, container, Linux and security checks | Implemented |
+### Cross-Layer AI Platform for Bitcoin Transaction Investigation
 
-### Architecture
+**Smart India Hackathon 2026 · SIH26146 · Brain Bytes · Team ID 131594**
 
-```
-  raw bytes
-      |
-      v
-  [ format detection ]  content-based, never the file extension
-      |
-      v
-  [ CSV / JSON / XML parser ]  -> raw records + locator ("row 2", "$[0]")
-      |
-      v
-  [ alias resolution + per-field validation ]  -> NormalizedRecord
-      |                                          (+ provenance, + issues)
-      v
-  [ conservative deduplication ]  identical evidence only
-      |                              (canonical fields + unmapped extras + issues)
-      v
-  [ normalized_to_unified ]  -> UnifiedObservation
-                                   (NETWORK | BLOCKCHAIN | COMBINED | UNKNOWN)
-      |
-      v
-  [ Step 4 correlation rules ]  -> EvidenceRelationship (OBSERVED / CORRELATED / INFERRED)
-      |                              (+ analyst-levelled REQUIRES_VERIFICATION)
-      v
-  [ Step 4C evidence graph ]  -> graph nodes + edges, provenance on every edge
-      |
-      +--> [ Step 5 behavioural features ]  -> profiles, no attribution
-      +--> [ Step 6 anomaly + clustering ]  -> scores, bands, clusters
-      +--> [ Step 7 path search + temporal ]  -> multi-hop paths, comparability
-      |
-      v
-  [ Step 8 fusion ]  -> signals, monotonic priority score, explanation
-      |
-      v
-  [ Step 9A dashboard API ]  -> read-only, sorted ids, deterministic payload
-```
+[![SIH 2026](https://img.shields.io/badge/Smart%20India%20Hackathon-2026-0A66C2?style=for-the-badge)](https://www.sih.gov.in/)
+[![PS](https://img.shields.io/badge/PS-SIH26146-6C5CE7?style=for-the-badge)](https://www.sih.gov.in/sih2026PS)
+[![Theme](https://img.shields.io/badge/Theme-Blockchain%20%26%20Cybersecurity-00A86B?style=for-the-badge)](https://www.sih.gov.in/)
+[![Software](https://img.shields.io/badge/Category-Software-F39C12?style=for-the-badge)](https://www.sih.gov.in/)
+[![Linux](https://img.shields.io/badge/Platform-Linux%20%7C%20Offline-111827?style=for-the-badge&logo=linux)](https://www.linux.org/)
 
-### Canonical SIH26146 fields
+# 🎥 LIVE DEMO · YOUTUBE
 
-`timestamp`, `src_ip`, `dst_ip`, `src_port`, `dst_port`, `txid`, `input_addresses[]`,
-`output_addresses[]`, `input_amounts[]`, `output_amounts[]`, `fee`, `script_type`,
-`geo_country`, `asn`.
+### ▶️ YouTube Video Demo
 
-### Design decisions worth knowing
+**The live working demonstration of BitTrace AI will be published here.**
 
-- **Timestamps.** Timezone-aware values are converted to UTC. A naive timestamp is
-  preserved *as naive* and flagged with a `NAIVE_TIMESTAMP` warning; it is never
-  silently stamped with the host's local timezone. Bare numeric epoch values are
-  refused because seconds-vs-milliseconds is undecidable.
-- **Deduplication is deliberately weak.** Two records collapse only when they are
-  the *same evidence*: every canonical field, every unmapped field, and every
-  reported issue identical. Same TXID, same IP pair or same fee is never a
-  duplicate, and neither is the same fourteen SIH columns carrying a different
-  `block_height` alongside. Only provenance may be dropped by a merge, which is
-  what makes a merge lossless rather than destructive.
-- **Unmapped fields are evidence, not decoration.** Any source column with no
-  canonical equivalent is preserved in `extra`, and it takes part in the
-  deduplication identity *and* in the derived `observation_id`, so distinct
-  unmapped values can never be collapsed away. An unmapped value whose type has
-  no defined equality (anything outside JSON-like data) is treated as
-  **non-deduplicable**: it never merges with anything and never shares an
-  `observation_id`. Inventing equality for a type we cannot compare would
-  silently merge unrelated evidence, which is the one failure a forensic
-  pipeline cannot recover from.
-- **Repeated XML siblings are never overwritten.** Two `<script_type>` elements
-  become a list; a value that cannot map onto a canonical scalar is reported as a
-  validation error with both values retained rather than silently resolved to one.
-- **`txid` is not an observation identifier.** `observation_id` is a separate,
-  deterministic UUIDv5 derived from observation content.
-- **Preserving data is not the same as claiming identity.** A `geo_country` or
-  `asn` supplied with no IP address anywhere is still canonical SIH data, so it
-  is kept on the `NetworkObservation` rather than discarded or demoted to
-  `extra`. That does **not** make the record a network observation:
-  `has_network_identity()` still requires an IP address, so such a record
-  classifies as `UNKNOWN` (or `BLOCKCHAIN` if it also carries transaction
-  structure). No address, owner or location is ever inferred; a preserved
-  `geo_country` is reproduced exactly as supplied.
-- **Reading evidence is never destructive.** `ingest_path()` leaves a caller's
-  source file untouched unless the caller explicitly declares it owns the file
-  (`owned=True`), which is how the `/ingest` endpoint disposes of its own staged
-  upload. Ownership is never inferred from a filename.
-- **No attribution.** A record containing both an IP and a TXID is classified
-  `COMBINED`, which is a statement about the record's *contents* only. It is not
-  evidence that the IP belongs to the wallet. Behavioural profiles describe
-  measured behaviour and never name an owner.
-- **Inference is labelled, never laundered.** `OBSERVED` is reserved for direct
-  observation, `CORRELATED` for rule-derived links, `INFERRED` for derived
-  judgements, and `REQUIRES_VERIFICATION` for analyst-levelled links. Certainty
-  (confidence 1.0) is reserved for exact deterministic matches; an inference
-  claiming it would present a judgement as a fact.
-- **A fused priority score is not a probability.** It is a monotonic score over
-  the signals that were available, and the explanation names both the signals
-  that contributed and the ones that were missing.
-- **Uploads.** The client filename is reduced to a bare display name and never
-  used to build a path; uploads are staged under server-generated temporary names
-  and always cleaned up. The format is decided by content, and a contradicting
-  `declared_format` is rejected rather than trusted.
+**YouTube Demo:** https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP
 
-### Repository Layout
-
-```
-BitTrace/
-├── backend/
-│   ├── requirements.txt          pinned runtime dependencies
-│   ├── requirements-dev.txt      test-only dependencies
-│   └── app/
-│       ├── main.py               FastAPI app, /, /health, POST /ingest
-│       ├── domain/               Step 3: enums, validation, models, adapters
-│       ├── ingestion/            Step 2: aliases, dedup, models, uploads,
-│       │                         service, parsers/{base,csv,json,xml}
-│       ├── correlation/          Step 4B: enums, models, rules, engine, provenance
-│       ├── graph/                Step 4C: models, builder
-│       ├── behavior/             Step 5: features, models, profiles
-│       ├── ml/                   Step 6: preprocessing, anomaly, clustering,
-│       │                         explanations
-│       ├── investigation/        Step 7: models, engine, paths, temporal
-│       ├── explainability/       Step 8: signals, fusion, models
-│       └── dashboard/            Step 9A: adapter, models, api
-├── evaluation/                   Step 10: scenarios, harness, CLI, expectations
-│   ├── README.md                 how to run it and what it does not claim
-│   ├── scenarios/                fixed CSV/JSON/XML corpus
-│   ├── canonical.py              canonical form, digests, run-scoped rules
-│   ├── corpus.py                 ingestion, ordering, correlation configuration
-│   ├── harness.py                dimensions, cases, invariants
-│   ├── run_evaluation.py         CLI, report, expected-output management
-│   ├── expected/                 the reviewed contract fixture
-│   └── reports/                  generated full report (git-ignored)
-├── frontend/
-├── tests/                        2214 tests across Steps 1-10
-├── Dockerfile                    two-stage, non-root runtime image
-├── .dockerignore
-└── pytest.ini
-```
-
-### Technology Stack
-
-- **Backend**: Python 3.13, FastAPI, Pydantic v2, Uvicorn
-- **Testing**: pytest, httpx (through FastAPI's `TestClient`)
-- **Packaging**: pinned `requirements.txt`, multi-stage `Dockerfile`
-- **Evaluation**: no third-party dependency; runs on the standard library plus the
-  application itself
-- **Frontend**: static HTML/CSS/JS with no build step required to serve
-
-### Offline Operation
-
-The platform is designed to run locally on Linux (or WSL on Windows). No cloud
-services are used. The Step 10 evaluation asserts this rather than assuming it:
-the full harness runs with `socket.socket.connect` disabled, so an accidental
-network dependency fails the suite instead of quietly changing the numbers on a
-connected machine.
-
-### Setup Instructions
-
-1. **Clone the repository** (already initialized).
-
-2. **Create a virtual environment**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate          # Linux / macOS
-   # .venv\Scripts\activate           # Windows PowerShell
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r backend/requirements.txt -r backend/requirements-dev.txt
-   ```
-
-4. **Run the FastAPI server**
-   ```bash
-   python -m uvicorn backend.app.main:app --reload
-   ```
-   Then open `http://127.0.0.1:8000/` for the Investigator Dashboard demo. The
-   backend serves `frontend/` from the same origin, so the page and its
-   `/api/dashboard/*` calls work in a normal browser tab; do not open
-   `frontend/index.html` from the filesystem, because browsers refuse to load its
-   ES modules over `file://`. `http://127.0.0.1:8000/docs` remains the API browser
-   and `/api/welcome` the original backend greeting.
-
-5. **Run the test suite**
-   ```bash
-   pytest
-   ```
-
-6. **Run the Step 10 evaluation**
-   ```bash
-   python -m evaluation.run_evaluation
-   ```
-   See [`evaluation/README.md`](evaluation/README.md) for what it measures, what it
-   deliberately does not claim, and how to regenerate the stored expectation.
-
-### Container
-
-```bash
-docker build -t bittrace:latest .
-docker run --rm -p 8000:8000 bittrace:latest
-```
-
-The image is a two-stage build: dependencies are resolved and byte-compiled in the
-builder, and the runtime stage copies only the virtual environment, `backend/` and
-`evaluation/`. It runs as an unprivileged user (`uid 10001`, `nologin`), sets
-`PYTHONHASHSEED=0` so set iteration order cannot break determinism, and declares a
-`HEALTHCHECK` against `/health`. Tests, the frontend and documentation are excluded
-from the image via `.dockerignore`, so the container serves the JSON API only and its
-root answers with the backend greeting rather than the dashboard page.
-
-To verify the evaluation runs inside the image with no network at all:
-
-```bash
-docker run --rm --network none --entrypoint python bittrace:latest \
-    -m evaluation.run_evaluation --quiet
-```
-
-### Determinism
-
-The evaluation digest is stable across processes and independent of input order.
-Where a value genuinely cannot be content-derived, it is substituted with a visible
-`<run-scoped>` placeholder and the path is listed in the report rather than being
-quietly dropped. The two known cases are the ingestion run identifier and the library
-version.
+</div>
 
 ---
 
-*Repository maintained by **Brain Bytes** for SIH 2026.*
+# 🏆 Smart India Hackathon 2026
+
+| | Details |
+|---|---|
+| 🎯 Problem Statement | **SIH26146** |
+| 📌 Title | **AI-Powered Monitoring & Analysis of Bitcoin Transaction Traffic** |
+| 🧩 Theme | **Blockchain & Cybersecurity** |
+| 💻 Category | **Software** |
+| 🏢 Organisation | **National Technical Research Organisation (NTRO)** |
+| 👥 Team ID | **131594** |
+| 🚀 Team | **Brain Bytes** |
+| 🧠 Solution | **BitTrace AI** |
+| 🐧 Deployment | **Linux / Offline-first** |
+
+> BitTrace AI is an offline-first investigation platform for correlating network-layer observations with Bitcoin blockchain metadata, constructing a provenance-aware evidence graph, applying AI/ML and graph intelligence, and generating explainable, prioritized investigative leads.
+
+The SIH problem calls for bulk ingestion of transaction/network metadata, cross-layer correlation, an entity/transaction graph, a working AI/ML detection component, ranked explainable alerts, and dashboard/link-analysis visualization.
+
+---
+
+# 🔎 What is BitTrace AI?
+
+**BitTrace AI** is an evidence-centric Bitcoin transaction investigation platform built around one principle:
+
+> ## Don't just flag suspicious activity — connect the evidence and explain why it matters.
+
+The platform brings together:
+
+- 🌐 Network telemetry
+- ₿ Bitcoin transaction metadata
+- 👛 Wallet addresses
+- 🔗 Transaction IDs
+- 🕒 Temporal behaviour
+- 🧩 Entity relationships
+- 🧠 AI/ML signals
+- 🕸️ Graph patterns
+- 📍 IP / ASN / geolocation context
+- 📑 Evidence provenance
+
+### Core journey
+
+**Raw Metadata → Normalization → Cross-Layer Correlation → Evidence Graph → AI/ML → Risk Scoring → Investigation Leads**
+
+---
+
+# 🚨 Problem We Address
+
+SIH26146 focuses on monitoring and analysing Bitcoin transaction traffic where illicit actors may move, layer, and cash out funds while attempting to avoid conventional financial surveillance.
+
+Relevant metadata includes:
+
+- Timestamp
+- Source IP / destination IP
+- Source / destination port
+- TXID
+- Input wallet addresses
+- Output wallet addresses
+- Input amounts
+- Output amounts
+- Fee
+- Script type
+- ASN / geolocation context
+
+The challenge is not simply storing this information. The harder problem is **connecting it across layers and extracting investigative meaning**.
+
+| Challenge | BitTrace AI Approach |
+|---|---|
+| Disconnected network + blockchain data | 🔗 Cross-layer correlation |
+| Large metadata volume | ⚙️ Structured ingestion + normalization |
+| Hidden relationships | 🕸️ Evidence graph |
+| Unusual behaviour | 🧠 Anomaly detection |
+| Related entities | 🧩 Entity clustering |
+| Time-based behaviour | 🕒 Temporal analysis |
+| Complex transaction structures | 📊 Graph pattern analysis |
+| Multiple risk signals | 🎯 Evidence fusion |
+| Black-box alerts | 🔍 Explainable evidence contribution |
+| Manual exploration | 🧭 Prioritized investigation paths |
+| Restricted environment | 🐧 Offline Linux-first design |
+
+---
+
+# 💡 Core Approach
+
+BitTrace AI follows a 7-stage investigation pipeline:
+
+~~~text
+1. DATA INGESTION
+   CSV / JSON / XML
+          ↓
+2. NORMALIZATION
+   Clean + Validate + Deduplicate
+          ↓
+3. CROSS-LAYER CORRELATION
+   IP ↔ TXID ↔ Wallet ↔ Time
+          ↓
+4. EVIDENCE GRAPH
+   Typed Entities + Relationships + Provenance
+          ↓
+5. AI / ML + GRAPH INTELLIGENCE
+   Anomaly + Clustering + Temporal + Graph
+          ↓
+6. EVIDENCE FUSION + RISK SCORING
+   Multi-signal + Explainability
+          ↓
+7. INVESTIGATIVE LEADS
+   Ranked Entities + Transactions + Paths
+~~~
+
+---
+
+# 🧬 What Makes BitTrace AI Different?
+
+### 🔗 1. Cross-Layer Investigation
+
+Network-layer and blockchain-layer information are correlated rather than analysed as isolated datasets.
+
+Example:
+
+**IP → TXID → Wallet → Transaction → Related Wallet → Entity**
+
+### 🕸️ 2. Evidence-First Graph
+
+The graph is built around typed relationships and provenance.
+
+Important relationships can retain:
+
+- Source
+- Timestamp
+- Relationship type
+- Observation context
+- Correlation basis
+
+### 🧠 3. Multi-Signal Intelligence
+
+Detection can combine:
+
+- Anomaly signals
+- Entity clustering
+- Temporal behaviour
+- Graph patterns
+- Transaction characteristics
+- Cross-layer relationships
+
+### 🔍 4. Explainable Risk Scoring
+
+Risk is accompanied by the evidence contributing to the flag rather than presenting an unexplained number.
+
+### 🎯 5. Prioritized Investigative Leads
+
+The system is designed to organize results into prioritized:
+
+- Entities
+- Transactions
+- Clusters
+- Network relationships
+- Investigation paths
+
+### 🐧 6. Offline-First
+
+The core workflow is designed for Linux and controlled environments using local/open-source components.
+
+---
+
+# 🏗️ Solution Architecture
+
+<div align="center">
+
+![BitTrace AI Solution Architecture](docs/architecture.svg)
+
+**Network + Blockchain → Correlation → Evidence Graph → AI/ML → Explainable Risk → Investigation**
+
+</div>
+
+---
+
+# 🔬 Technical Data Flow
+
+## 01 · Data Ingestion
+
+Supported input direction:
+
+- CSV
+- JSON
+- XML
+
+Expected fields:
+
+**IP · Port · Timestamp · ASN · TXID · Wallet · Amount · Fee · Script Type**
+
+## 02 · Unified Data Model
+
+Raw inputs are transformed into a common internal representation through:
+
+- Schema mapping
+- Validation
+- Cleaning
+- Entity normalization
+- Deduplication
+- Missing-value handling
+- Type normalization
+
+Planned tooling: **Pandas · NumPy · FastAPI · SQLite · DuckDB**
+
+## 03 · Cross-Layer Correlation
+
+~~~text
+Network IP
+   │
+   ├── observed near transaction
+   ↓
+TXID
+   │
+   ├── references
+   ↓
+Wallet
+   │
+   ├── participates in
+   ↓
+Transaction Flow
+   │
+   └── connects to
+   ↓
+Related Wallet / Entity
+~~~
+
+Correlation dimensions:
+
+- IP ↔ TXID
+- Wallet ↔ IP
+- Transaction ↔ Time
+- Transaction ↔ Amount
+- Wallet ↔ Wallet
+- Multi-signal temporal relationships
+
+## 04 · Evidence Graph
+
+### Entities
+
+🌐 IP Address · 🔌 Port · ₿ Transaction · 👛 Wallet · 🧩 Cluster · 🏷️ ASN · 📍 Geo Context
+
+### Relationships
+
+OBSERVED_FROM · RELATED_TO · INPUT_OF · OUTPUT_OF · CONNECTED_TO · OCCURRED_NEAR · CLUSTERED_WITH
+
+The graph is intended to preserve **source + time + relationship semantics**, not merely display connections.
+
+---
+
+# 🧠 AI / ML Intelligence
+
+SIH26146 highlights entity clustering, anomaly detection, peeling-chain / mixing detection and risk scoring.
+
+## 🚨 Anomaly Detection
+
+Identify statistically unusual transaction or flow behaviour using signals such as:
+
+- Unusual transaction amounts
+- Unusual frequency
+- Abnormal temporal activity
+- Unexpected interaction patterns
+- Unusual graph connectivity
+
+## 🧩 Entity Clustering
+
+Group wallets or related entities using behavioural and structural characteristics such as:
+
+- Common input/output patterns
+- Shared relationships
+- Transaction behaviour
+- Graph structural features
+- Temporal similarity
+
+## 🕒 Temporal Analysis
+
+Investigate sequences and movement patterns over time.
+
+~~~text
+Event A
+  ↓
+short time gap
+  ↓
+Event B
+  ↓
+short time gap
+  ↓
+Event C
+~~~
+
+## 🕸️ Graph Pattern Analysis
+
+Potential patterns include:
+
+- Peeling-chain-like flows
+- Mixing-like structures
+- Dense wallet relationships
+- Rapid multi-hop movement
+- Cluster-level behavioural patterns
+
+## 🎯 Risk Scoring
+
+Conceptually:
+
+~~~text
+Risk Score =
+    Behavioural Signal
+  + Temporal Signal
+  + Graph Signal
+  + Cross-Layer Signal
+  + Entity/Cluster Signal
+  + Evidence Strength
+~~~
+
+The exact weighting/model will be validated experimentally during implementation.
+
+> **Risk scores are investigation-support signals, not automatic accusations or final determinations.**
+
+---
+
+# 🔍 Explainability & Evidence Contribution
+
+A core design principle:
+
+> **Every important alert should have an evidence trail.**
+
+Instead of only showing:
+
+~~~text
+Wallet XYZ
+Risk: High
+~~~
+
+the investigation view should expose:
+
+~~~text
+Wallet XYZ
+
+Why flagged?
+✓ Cross-layer relationship
+✓ Related transaction cluster
+✓ Temporal pattern
+✓ Graph connectivity
+✓ Anomaly contribution
+
+Evidence
+├── Network observation
+├── Transaction relationship
+├── Wallet relationship
+├── Temporal relationship
+└── Graph path
+~~~
+
+This supports analyst review and makes the output traceable.
+
+---
+
+# 🎯 Prioritized Investigative Leads
+
+| Lead Type | Purpose |
+|---|---|
+| 👛 Entity Lead | Wallet/entity requiring review |
+| ₿ Transaction Lead | Transaction requiring investigation |
+| 🧩 Cluster Lead | Related group of entities |
+| 🌐 Network Lead | Relevant IP/network relationship |
+| 🕒 Temporal Lead | Important sequence/timing |
+| 🕸️ Graph Lead | Important relationship path |
+| 📑 Evidence Lead | Evidence supporting a flag |
+
+Each lead can expose:
+
+- Risk score
+- Evidence contribution
+- Related entities
+- Related transactions
+- Investigation path
+- Source information
+- Time context
+
+---
+
+# 🖥️ Investigation Dashboard
+
+### 📊 Overview
+
+- Total entities
+- Transactions processed
+- Alerts generated
+- High-priority leads
+- Risk distribution
+- Activity trends
+
+### 🕸️ Graph View
+
+Interactive visualization of:
+
+- Wallets
+- Transactions
+- IPs
+- Clusters
+- Relationships
+- Evidence paths
+
+### 🔎 Entity Details
+
+For a selected entity:
+
+- Entity/type
+- Related transactions
+- Related IPs
+- Related wallets
+- Cluster information
+- Risk score
+- Evidence contributions
+
+### 🧭 Investigation Path
+
+~~~text
+IP
+ ↓
+TXID
+ ↓
+Wallet A
+ ↓
+Wallet B
+ ↓
+Cluster C
+ ↓
+Prioritized Lead
+~~~
+
+### 📑 Reports
+
+Investigation summaries containing:
+
+- Alert details
+- Risk score
+- Evidence
+- Relationships
+- Investigation path
+- Supporting metadata
+
+---
+
+# 🛠️ Technology Stack
+
+| Layer | Technology |
+|---|---|
+| 🐍 Backend | **Python** |
+| ⚡ API | **FastAPI** |
+| 📦 Data Processing | **Pandas, NumPy** |
+| 🕸️ Graph Analysis | **NetworkX** |
+| 🗄️ Graph Storage | **Neo4j (local)** |
+| 🤖 ML | **Scikit-learn** |
+| 🧠 Deep Learning | **PyTorch** |
+| 💾 Local Database | **SQLite / DuckDB** |
+| ⚛️ Frontend | **React + TypeScript + Vite** |
+| 🕸️ Graph UI | **Cytoscape.js** |
+| 📈 Visualization | **Plotly** |
+| 🐳 Deployment | **Docker** |
+| 🐧 Target Platform | **Linux / Offline** |
+
+---
+
+# 📁 Planned Repository Structure
+
+~~~text
+SIH26146/
+├── backend/
+│   ├── api/
+│   ├── ingestion/
+│   ├── normalization/
+│   ├── correlation/
+│   ├── graph/
+│   ├── detection/
+│   ├── risk/
+│   └── investigation/
+├── frontend/
+│   ├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── graph/
+│   └── services/
+├── data/
+│   ├── sample/
+│   └── schemas/
+├── models/
+├── notebooks/
+├── docs/
+├── tests/
+├── scripts/
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+~~~
+
+> This is the intended development architecture. Components will be added as implementation progresses.
+
+---
+
+# 🔐 Security & Investigation Principles
+
+### 🛡️ Privacy & Data Handling
+
+- Offline-first processing
+- Local data storage
+- Controlled deployment
+- No unnecessary external data transmission
+- Dataset separation from application code
+- Configurable access boundaries
+
+### 👤 Human-in-the-Loop
+
+~~~text
+AI Signal
+   ↓
+Evidence
+   ↓
+Risk Score
+   ↓
+Analyst Review
+   ↓
+Investigation Decision
+~~~
+
+The system supports analysts; model output remains a decision-support signal.
+
+---
+
+# ⚠️ Risks & Mitigation
+
+| Risk | Mitigation |
+|---|---|
+| Synthetic / incomplete data | Multiple datasets + scenario-based validation |
+| False positives | Precision/recall + human review |
+| Class imbalance | Suitable sampling + anomaly-focused evaluation |
+| Incorrect clustering | Graph context + temporal consistency |
+| Resource constraints | Lightweight models + batching + filtering |
+| Model overconfidence | Explainable evidence contribution |
+| Weak traceability | Provenance-aware graph relationships |
+| Offline limitations | Local/open-source architecture |
+| Dataset bias | Multiple behavioural scenarios |
+
+---
+
+# 📏 Evaluation Strategy
+
+### Machine Learning
+
+- Precision
+- Recall
+- F1-score
+- Confusion matrix
+- ROC-AUC where applicable
+- Anomaly detection quality
+
+### Investigation
+
+- Alert prioritization quality
+- Evidence coverage
+- Investigation-path completeness
+- Cross-layer correlation accuracy
+- Entity clustering quality
+- Analyst review efficiency
+
+### System
+
+- Ingestion throughput
+- Query latency
+- Graph response time
+- Memory usage
+- Offline deployment reliability
+
+---
+
+# 🧪 Dataset Strategy
+
+The SIH problem statement specifies synthetic data modelled on real Bitcoin P2P / transaction fields.
+
+Development can use controlled datasets containing:
+
+~~~text
+timestamp
+src_ip
+dst_ip
+src_port
+dst_port
+txid
+input_addresses[]
+output_addresses[]
+input_amounts[]
+output_amounts[]
+fee
+script_type
+geo / ASN context
+~~~
+
+External research datasets used for experimentation will be clearly separated from SIH-provided or synthetic evaluation data.
+
+---
+
+# 🚀 Build Roadmap
+
+~~~text
+PHASE 01 ─ Foundation
+   Repository · Environment · Schemas · Sample Data
+
+PHASE 02 ─ Data Layer
+   CSV/JSON/XML · Validation · Normalization · Storage
+
+PHASE 03 ─ Correlation
+   Network ↔ Blockchain · Temporal Correlation · Entity Normalization
+
+PHASE 04 ─ Evidence Graph
+   Entities · Relationships · Provenance · Graph Queries
+
+PHASE 05 ─ Intelligence
+   Anomaly Detection · Clustering · Temporal · Graph Patterns
+
+PHASE 06 ─ Risk & Investigation
+   Evidence Fusion · Explainable Scoring · Lead Prioritization
+
+PHASE 07 ─ Dashboard
+   Overview · Graph · Entity Explorer · Alerts · Reports
+
+PHASE 08 ─ Validation
+   Benchmarks · False Positives · Performance · Offline Deployment
+
+PHASE 09 ─ Demo
+   End-to-End Scenario · Working Demo · Documentation · YouTube
+~~~
+
+---
+
+# 🏁 SIH26146 Requirement Coverage
+
+| SIH Requirement | BitTrace AI Coverage |
+|---|---|
+| Bulk metadata ingestion | ✅ CSV / JSON / XML pipeline |
+| Network metadata | ✅ IP / port / timestamp / ASN |
+| Blockchain metadata | ✅ TXID / wallet / amount / fee / script |
+| Cross-layer correlation | ✅ IP ↔ TXID ↔ Wallet ↔ Time |
+| Entity / transaction graph | ✅ Evidence graph |
+| AI/ML model | 🔧 Intelligence layer |
+| Entity clustering | 🔧 Planned |
+| Anomaly detection | 🔧 Planned |
+| Peeling / mixing analysis | 🔧 Planned |
+| Risk scoring | 🔧 Evidence fusion |
+| Explainable alerts | 🔧 Evidence contribution |
+| Ranked investigative leads | 🔧 Investigation layer |
+| Dashboard | 🔧 React + Cytoscape.js + Plotly |
+| Link analysis | 🔧 Interactive graph |
+| Offline Linux solution | 🎯 Core architecture |
+
+**Legend:** ✅ addressed in architecture · 🔧 implementation planned/in progress · 🎯 core requirement
+
+---
+
+# 👥 Team Brain Bytes
+
+### Smart India Hackathon 2026 · Team ID 131594
+
+| Role | Name | Stream | Year |
+|---|---|---|---|
+| 👑 **Team Leader** | **Nirav Vala** | B.Sc. IT | 2nd Year |
+| 👤 Team Member | **Sammi Yadav** | B.Sc. IT | 3rd Year |
+| 👤 Team Member | **Maimuna Vala** | B.Sc. IT | 3rd Year |
+| 👤 Team Member | **Naaz Khalani** | B.Sc. IT | 3rd Year |
+| 👤 Team Member | **Vaishaliba Mahendrasinh** | B.Sc. IT | 3rd Year |
+| 👤 Team Member | **Archiben Nagar** | B.Sc. IT | 3rd Year |
+
+**Team:** Brain Bytes  
+**Team ID:** 131594  
+**Problem Statement:** SIH26146
+
+---
+
+# 🌐 SIH & Research Resources
+
+### 🇮🇳 Smart India Hackathon
+
+- [SIH Official Website](https://www.sih.gov.in/)
+- [SIH 2026 Problem Statements](https://www.sih.gov.in/sih2026PS)
+- [SIH26146 Official Problem Statement](https://www.sih.gov.in/sih2026PS)
+
+### 🏛️ Organisation
+
+- [National Technical Research Organisation (NTRO)](https://ntro.gov.in/)
+
+### ₿ Bitcoin
+
+- [Bitcoin Whitepaper — Satoshi Nakamoto](https://bitcoin.org/bitcoin.pdf)
+
+### 📊 Dataset
+
+- [Elliptic Bitcoin Dataset — Kaggle](https://www.kaggle.com/datasets/ellipticco/elliptic-data-set)
+
+### 📚 Research
+
+- [Weber et al. — Anti-Money Laundering in Bitcoin](https://arxiv.org/abs/1908.02591)
+
+### 🔬 Industry Research
+
+- [Chainalysis — Crypto Crime Research](https://www.chainalysis.com/blog/)
+
+### 🌍 Geolocation
+
+- [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geolite2/)
+
+---
+
+# 🎬 LIVE DEMO
+
+<div align="center">
+
+## ▶️ BitTrace AI — Live Working Demonstration
+
+**Dataset → Ingestion → Normalization → Correlation → Evidence Graph → AI/ML → Risk Scoring → Investigation Dashboard**
+
+### 📺 YouTube
+
+**Live demo / project channel:** https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP
+
+[🔴 YouTube — Coding](https://youtube.com/@coding-w5z?si=GVbCpjPuLZawp9lP)
+
+</div>
+
+---
+
+# 📌 Project Status
+
+> 🚧 **Active Development**
+
+- [ ] Repository foundation
+- [ ] Dataset schemas
+- [ ] Data ingestion
+- [ ] Normalization
+- [ ] Cross-layer correlation
+- [ ] Evidence graph
+- [ ] AI/ML detection
+- [ ] Entity clustering
+- [ ] Risk scoring
+- [ ] Investigation dashboard
+- [ ] Evidence-backed reports
+- [ ] End-to-end offline demo
+- [ ] YouTube live demo
+
+---
+
+# 🤝 Development Principles
+
+- Modular components
+- Reproducible experiments
+- Clear data schemas
+- Testable analytical modules
+- Explainable outputs
+- Evidence traceability
+- Offline-compatible dependencies
+- Documentation alongside implementation
+
+---
+
+# 📜 Disclaimer
+
+BitTrace AI is an **investigative decision-support prototype** developed for Smart India Hackathon 2026.
+
+Model outputs, anomaly scores and risk scores are analytical signals. They are not, by themselves, proof of wrongdoing or automatic determinations of criminal activity. Human review and appropriate investigative procedures remain essential.
+
+---
+
+<div align="center">
+
+# 🧠 BitTrace AI
+
+### Cross-Layer AI Platform for Bitcoin Transaction Investigation
+
+**Built by Brain Bytes for Smart India Hackathon 2026**
+
+[![GitHub](https://img.shields.io/badge/GitHub-SIH26146-181717?style=for-the-badge&logo=github)](https://github.com/codebynv/SIH26146)
+[![SIH](https://img.shields.io/badge/SIH-2026-0A66C2?style=for-the-badge)](https://www.sih.gov.in/)
+[![PS](https://img.shields.io/badge/PS-SIH26146-6C5CE7?style=for-the-badge)](https://www.sih.gov.in/sih2026PS)
+
+**Trace the signal. Connect the evidence. Prioritize the investigation.**
+
+</div>
