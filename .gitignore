@@ -40,3 +40,5 @@ tmp_evidence_block.txt
 tmp_old.txt
 tmp_patch.txt
 _probe_css.py
+frontend/js/graph.js.bak
+tests/test_step9b_phase1_navigation.py.template

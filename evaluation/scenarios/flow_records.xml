@@ -1,0 +1,27 @@
+<records>
+  <record>
+    <timestamp>2024-06-01T00:40:00Z</timestamp>
+    <src_ip>203.0.113.18</src_ip>
+    <dst_ip>198.51.100.5</dst_ip>
+    <src_port>51008</src_port>
+    <dst_port>443</dst_port>
+    <txid>bbbb000000000000000000000000000000000000000000000000000000000001</txid>
+    <input_addresses><address>bc1qevaladdress0000000000000000000000000000001</address></input_addresses>
+    <output_addresses><address>bc1qevalshared000000000000000000000000000008</address></output_addresses>
+    <input_amounts><amount>3.0</amount></input_amounts>
+    <output_amounts><amount>2.99999</amount></output_amounts>
+    <fee>0.00001</fee>
+    <script_type>P2PKH</script_type>
+    <geo_country>IN</geo_country>
+    <asn>64500</asn>
+  </record>
+  <record>
+    <txid>cccc000000000000000000000000000000000000000000000000000000000009</txid>
+    <input_addresses><address>bc1qevaladdress0000000000000000000000000000006</address></input_addresses>
+    <output_addresses><address>bc1qevalout00000000000000000000000000000009</address></output_addresses>
+    <input_amounts><amount>11.0</amount></input_amounts>
+    <output_amounts><amount>10.99999</amount></output_amounts>
+    <fee>0.00001</fee>
+    <script_type>P2WSH</script_type>
+  </record>
+</records>

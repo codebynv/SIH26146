@@ -1,0 +1,114 @@
+﻿@media print {
+  @page { margin: 16mm; size: A4; }
+  
+  .dashboard-header,
+  .dashboard-header__actions,
+  button,
+  .section-error button,
+  .graph-controls,
+  .graph-zoom,
+  .graph-legend,
+  .legend-bar,
+  .accordion__header .accordion__icon {
+    display: none !important;
+  }
+  
+  .dashboard-grid { display: block; height: auto; }
+  .dashboard-main { display: block; padding: 0; gap: 0; }
+  .dashboard-section { 
+    break-inside: avoid; 
+    page-break-inside: avoid; 
+    margin-bottom: 16px; 
+    box-shadow: none; 
+    border: 1px solid #ccc; 
+    background: white !important;
+  }
+  .dashboard-section__header { 
+    background: #f0f0f0 !important; 
+    border-bottom: 1px solid #ccc; 
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .dashboard-section__content { padding: 12px; }
+  
+  body { 
+    background: white !important; 
+    color: black !important; 
+    font-size: 11pt; 
+    line-height: 1.4;
+  }
+  
+  .mono { font-family: "Courier New", monospace; }
+  
+  .inference-badge,
+  .signal-role {
+    border: 1px solid #ccc !important; 
+    background: white !important; 
+    color: black !important; 
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .badge--observed { border-color: #1a7f37 !important; color: #1a7f37 !important; }
+  .badge--correlated { border-color: #0969da !important; color: #0969da !important; }
+  .badge--inferred { border-color: #8250df !important; color: #8250df !important; }
+  .badge--requires { border-color: #bf3e05 !important; color: #bf3e05 !important; }
+  
+  .badge--priority { border-color: #bf3e05 !important; color: #bf3e05 !important; }
+  .badge--evidence { border-color: #0969da !important; color: #0969da !important; }
+  .badge--context { border-color: #9a6700 !important; color: #9a6700 !important; }
+  
+  .card--priority { 
+    border-color: #bf3e05 !important; 
+    background: #fff8f0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .metric__value--priority { color: #bf3e05 !important; }
+  .metric__value--high { color: #cf222e !important; }
+  .metric__value--medium { color: #bf3e05 !important; }
+  .metric__value--low { color: #1a7f37 !important; }
+  .metric__value--context { color: #9a6700 !important; }
+  
+  .graph-container { 
+    height: 350px; 
+    page-break-inside: avoid; 
+  }
+  
+  .graph-node__circle { fill: white !important; stroke: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .graph-node--subject .graph-node__circle { stroke: #0969da !important; stroke-width: 2 !important; }
+  .graph-node__label { fill: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .graph-node--subject .graph-node__label { fill: #0969da !important; font-weight: 600; }
+  
+  .graph-edge { stroke: #666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .graph-edge--observed { stroke: #1a7f37 !important; }
+  .graph-edge--correlated { stroke: #0969da !important; }
+  .graph-edge--inferred { stroke: #8250df !important; stroke-dasharray: 4 2; }
+  .graph-edge--requires { stroke: #bf3e05 !important; stroke-dasharray: 2 2; }
+  .graph-edge--incident { stroke-width: 2 !important; }
+  .graph-edge--context { stroke-width: 1 !important; opacity: 0.6; }
+  
+  .evidence-type-tag { 
+    border: 1px solid #ccc !important; 
+    background: white !important; 
+    color: #333 !important; 
+  }
+  
+  .confidence-bar__track { background: #eee !important; }
+  .confidence-bar__fill { background: #0969da !important; }
+  
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #ddd !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  th { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  
+  .path-card { border: 1px solid #ccc !important; }
+  .path-card__header { background: #f0f0f0 !important; border-bottom: 1px solid #ccc !important; }
+  
+  .accordion__content { display: block !important; padding: 8px 0; }
+  .accordion__header { background: #f0f0f0 !important; border: none; }
+  
+  .section-empty { color: #666 !important; }
+  
+  a { text-decoration: none; color: #0969da !important; }
+}

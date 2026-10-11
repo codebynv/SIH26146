@@ -1,0 +1,3 @@
+# Test-only dependencies. Kept out of backend/requirements.txt so the runtime
+# image does not carry a test framework it will never import.
+pytest==9.1.1

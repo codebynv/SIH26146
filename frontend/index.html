@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BitTrace AI — Investigator Dashboard</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/graph.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+  <!--
+    Step 10: the dashboard must render with no network access, so no webfont
+    CDN is referenced. Typography falls back to the system stacks declared in
+    css/variables.css (--font-ui, --font-mono), which ship with the image.
+  -->
+</head>
+<body>
+  <div class="dashboard-grid">
+    <header class="dashboard-header">
+      <div class="dashboard-header__title">BitTrace AI — Investigator Dashboard</div>
+      <div class="dashboard-header__actions">
+        <button id="btn-refresh" class="primary" aria-label="Refresh dashboard">Refresh</button>
+        <button id="btn-print" aria-label="Print dashboard">Print</button>
+      </div>
+    </header>
+    
+<!-- Step 9B Phase 1: investigator navigation + global dashboard search -->
+    <div class="dashboard-toolbar">
+      <nav id="investigator-nav" class="investigator-nav" aria-label="Dashboard sections">
+        <ul class="investigator-nav__list">
+          <li class="investigator-nav__item"><a class="investigator-nav__link" href="#overview-content" data-section="overview-content" aria-current="true">Overview</a></li>
+          <li class="investigator-nav__item"><a class="investigator-nav__link" href="#why-lead-content" data-section="why-lead-content">Why This Lead</a></li>
+          <li class="investigator-nav__item"><a class="investigator-nav__link" href="#evidence-chain-content" data-section="evidence-chain-content">Evidence Chain</a></li>
+          <li class="investigator-nav__item"><a class="investigator-nav__link" href="#cross-layer-content" data-section="cross-layer-content">Cross-Layer Correlation</a></li>
+          <li class="investigator-nav__item"><a class="investigator-nav__link" href="#paths-content" data-section="paths-content">Investigation Paths</a></li>
+          <li class="investigator-nav__item"><a class="investigator-nav__link" href="#behavior-ml-content" data-section="behavior-ml-content">Behavioral / ML</a></li>
+          <li class="investigator-nav__item"><a class="investigator-nav__link" href="#provenance-content" data-section="provenance-content">Provenance / Verification</a></li>
+        </ul>
+      </nav>
+
+      <div class="global-search" role="search" aria-label="Global dashboard search">
+        <label class="global-search__label" for="global-search-input">Search</label>
+        <input
+          id="global-search-input"
+          class="global-search__input"
+          type="search"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="global-search-results"
+          aria-autocomplete="list"
+          aria-describedby="global-search-count"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Search loaded dashboard data">
+        <button type="button" id="global-search-clear" class="global-search__clear" aria-label="Clear search" hidden>Clear</button>
+        <div id="global-search-count" class="global-search__count" role="status" aria-live="polite"></div>
+        <ul id="global-search-results" class="global-search__results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+    </div>
+
+    <main class="dashboard-main" id="dashboard-main">
+      <!-- Section 1: Investigation Overview -->
+      <section class="dashboard-section section-overview" aria-labelledby="overview-title">
+        <header class="dashboard-section__header">
+          <h2 id="overview-title" class="dashboard-section__title">Investigation Overview</h2>
+        </header>
+        <div class="dashboard-section__content" id="overview-content">
+          <div class="loading-skeleton" style="height: 200px;"></div>
+        </div>
+      </section>
+      
+      <!-- Section 2: Why This Lead -->
+      <section class="dashboard-section section-why-lead" aria-labelledby="why-lead-title">
+        <header class="dashboard-section__header">
+          <h2 id="why-lead-title" class="dashboard-section__title">Why This Lead?</h2>
+        </header>
+        <div class="dashboard-section__content" id="why-lead-content">
+          <div class="loading-skeleton" style="height: 300px;"></div>
+        </div>
+      </section>
+      
+      <!-- Section 3: Evidence Chain -->
+      <section class="dashboard-section section-evidence-chain" aria-labelledby="evidence-chain-title">
+        <header class="dashboard-section__header">
+          <h2 id="evidence-chain-title" class="dashboard-section__title">Evidence Chain</h2>
+        </header>
+        <div class="dashboard-section__content">
+          <div id="evidence-chain-controls" class="graph-filters" style="margin-bottom: 0.5rem;" aria-label="Evidence filters">
+            <div class="graph-filter-group"><label for="evidence-filter-type">Evidence Type</label><select id="evidence-filter-type" class="graph-filter-select"><option value="all">All Types</option></select></div>
+            <div class="graph-filter-group"><label for="evidence-filter-inference">Inference Level</label><select id="evidence-filter-inference" class="graph-filter-select"><option value="all">All Levels</option></select></div>
+            <div class="graph-filter-group" style="display:flex; gap:0.25rem; align-items:end;"><button id="evidence-clear-filters" type="button" class="primary">Clear Filters</button></div>
+            <div class="graph-filter-group" style="display:flex; gap:0.25rem; align-items:end;"><button id="evidence-expand-all" type="button">Expand All</button><button id="evidence-collapse-all" type="button">Collapse All</button></div>
+          </div>
+          <div id="evidence-chain-content"></div>
+          <div id="evidence-selection-details" class="card" style="margin-top:0.75rem;" aria-live="polite">No evidence selected.</div>
+        </div>
+      </section>
+      
+      <!-- Section 4: Cross-Layer Correlation -->
+      <section class="dashboard-section section-cross-layer" aria-labelledby="cross-layer-title">
+        <header class="dashboard-section__header">
+          <h2 id="cross-layer-title" class="dashboard-section__title">Cross-Layer Correlation</h2>
+        </header>
+        <div class="dashboard-section__content" id="cross-layer-content">
+          <!--
+            The cross-layer panels, the graph and its selection details all share
+            this section, so the panels render into their own container instead
+            of replacing the section content. Replacing it would delete the graph
+            container and the details panel on every data load.
+          -->
+          <div id="cross-layer-panels"></div>
+          <div id="graph-filters" class="graph-filters"></div><div class="graph-container"></div><div id="graph-selection-details">No graph element selected.</div>
+        </div>
+      </section>
+      
+      <!-- Section 5: Investigation Paths -->
+      <section class="dashboard-section section-paths" aria-labelledby="paths-title">
+        <header class="dashboard-section__header">
+          <h2 id="paths-title" class="dashboard-section__title">Investigation Paths</h2>
+        </header>
+        <div class="dashboard-section__content" id="paths-content">
+          <div class="loading-skeleton" style="height: 300px;"></div>
+        </div>
+      </section>
+      
+      <!-- Section 6: Behavioral / ML Context -->
+      <section class="dashboard-section section-behavior-ml" aria-labelledby="behavior-ml-title">
+        <header class="dashboard-section__header">
+          <h2 id="behavior-ml-title" class="dashboard-section__title">Behavioral / ML Context</h2>
+        </header>
+        <div class="dashboard-section__content" id="behavior-ml-content">
+        </div>
+      </section>
+      
+      <!-- Section 7: Provenance / Verification -->
+      <section class="dashboard-section section-provenance" aria-labelledby="provenance-title">
+        <header class="dashboard-section__header">
+          <h2 id="provenance-title" class="dashboard-section__title">Provenance / Verification</h2>
+        </header>
+        <div class="dashboard-section__content" id="provenance-content">
+        </div>
+      </section>
+      
+      <!-- Section 8: Inference Level Legend -->
+      <section class="dashboard-section section-legend" aria-labelledby="legend-title">
+        <header class="dashboard-section__header">
+          <h2 id="legend-title" class="dashboard-section__title">Evidence Classification</h2>
+        </header>
+        <div class="dashboard-section__content" id="legend-content">
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <!-- Global tooltip -->
+  <div id="global-tooltip" class="tooltip" role="tooltip" aria-hidden="true"></div>
+  
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
+
+

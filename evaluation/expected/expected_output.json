@@ -1,0 +1,1220 @@
+{
+  "behavioral_features": {
+    "any_profile_claims_attribution": false,
+    "category_counts": {
+      "ACTIVITY_VOLUME": 1,
+      "ADDRESS_PARTICIPATION": 1,
+      "EVIDENCE_GRAPH": 1,
+      "NETWORK_BEHAVIOR": 1,
+      "PROVENANCE_DIVERSITY": 1,
+      "TEMPORAL_ACTIVITY": 1,
+      "TRANSACTION_AMOUNTS": 1
+    },
+    "excluded_measurement_count": 0,
+    "feature_names_by_category": {
+      "ACTIVITY_VOLUME": [
+        "blockchain_observation_count (COUNT)",
+        "blockchain_type_observation_count (COUNT)",
+        "combined_type_observation_count (COUNT)",
+        "evidence_relationship_count [ABSENT] (COUNT)",
+        "internal_evidence_relationship_count [ABSENT] (COUNT)",
+        "network_observation_count (COUNT)",
+        "network_type_observation_count (COUNT)",
+        "observation_count (COUNT)",
+        "transaction_count (COUNT)",
+        "txid_occurrence_count (COUNT)",
+        "txid_values (LABEL_SET)",
+        "unique_txid_count (COUNT)",
+        "unknown_type_observation_count (COUNT)"
+      ],
+      "ADDRESS_PARTICIPATION": [
+        "address_values (LABEL_SET)",
+        "input_address_occurrences (COUNT)",
+        "input_address_values (LABEL_SET)",
+        "output_address_occurrences (COUNT)",
+        "output_address_values (LABEL_SET)",
+        "unique_address_count (COUNT)",
+        "unique_input_address_count (COUNT)",
+        "unique_output_address_count (COUNT)"
+      ],
+      "EVIDENCE_GRAPH": [
+        "evidence_type_values (LABEL_SET)",
+        "graph_edge_count [ABSENT] (COUNT)",
+        "graph_node_count [ABSENT] (COUNT)",
+        "incident_observation_degree [ABSENT] (COUNT)",
+        "incident_observation_values (LABEL_SET)",
+        "incoming_evidence_edge_count [ABSENT] (COUNT)",
+        "outgoing_evidence_edge_count [ABSENT] (COUNT)",
+        "rule_id_values (LABEL_SET)",
+        "unique_evidence_type_count [ABSENT] (COUNT)",
+        "unique_rule_count [ABSENT] (COUNT)"
+      ],
+      "NETWORK_BEHAVIOR": [
+        "asn_values (LABEL_SET)",
+        "country_values (LABEL_SET)",
+        "dst_ip_values (LABEL_SET)",
+        "dst_port_values (LABEL_SET)",
+        "src_ip_values (LABEL_SET)",
+        "src_port_values (LABEL_SET)",
+        "unique_asn_count (COUNT)",
+        "unique_country_count (COUNT)",
+        "unique_dst_ip_count (COUNT)",
+        "unique_dst_port_count (COUNT)",
+        "unique_src_ip_count (COUNT)",
+        "unique_src_port_count (COUNT)"
+      ],
+      "PROVENANCE_DIVERSITY": [
+        "ingestion_id_values (LABEL_SET)",
+        "provenance_reference_count (COUNT)",
+        "source_file_values (LABEL_SET)",
+        "source_record_values (LABEL_SET)",
+        "unique_ingestion_count (COUNT)",
+        "unique_source_file_count (COUNT)",
+        "unique_source_record_count (COUNT)"
+      ],
+      "TEMPORAL_ACTIVITY": [
+        "active_duration_seconds (DECIMAL)",
+        "aware_timestamp_count (COUNT)",
+        "event_time_span_seconds (DECIMAL)",
+        "events_per_day [ABSENT] (DECIMAL)",
+        "first_seen (TIMESTAMP)",
+        "last_seen (TIMESTAMP)",
+        "naive_first_seen [ABSENT] (TIMESTAMP)",
+        "naive_last_seen [ABSENT] (TIMESTAMP)",
+        "naive_time_span_seconds [ABSENT] (DECIMAL)",
+        "naive_timestamp_count (COUNT)",
+        "timestamp_count (COUNT)",
+        "timestamp_state (LABEL)"
+      ],
+      "TRANSACTION_AMOUNTS": [
+        "amount_count (COUNT)",
+        "fee_amount_count (COUNT)",
+        "input_amount_count (COUNT)",
+        "maximum_amount (DECIMAL)",
+        "mean_amount (DECIMAL)",
+        "median_amount (DECIMAL)",
+        "minimum_amount (DECIMAL)",
+        "output_amount_count (COUNT)",
+        "total_fee_amount (DECIMAL)",
+        "total_input_amount (DECIMAL)",
+        "total_output_amount (DECIMAL)"
+      ]
+    },
+    "measurement_status_counts": {
+      "ABSENT": 13,
+      "OBSERVED": 60
+    },
+    "profile_count": 1,
+    "total_features": 73
+  },
+  "dashboard_payload": {
+    "behavior_keys": [
+      "anomaly_band",
+      "anomaly_is_in_sample",
+      "anomaly_normalized_score",
+      "cluster_distance",
+      "cluster_id",
+      "cluster_normalized",
+      "cluster_size",
+      "explanation_items",
+      "feature_categories",
+      "feature_count",
+      "grouping",
+      "profile_id"
+    ],
+    "evidence_count": 13,
+    "evidence_relationship_ids": [
+      "02ad12b3-8383-540a-9b6f-2eeaeef57c1c",
+      "045f903e-2bba-5110-9078-8592b4de35e9",
+      "05ef28f0-1b09-5155-bd43-76fac081481b",
+      "0e7618f8-4cee-5199-b2cb-ab257a589ac8",
+      "1b2aebd1-a78c-5054-aefd-7bef910da545",
+      "4dd5c1b6-d5c3-5267-8a1d-21594a7ed448",
+      "5c08545f-bae4-52ab-a3b7-634a32572cb9",
+      "5cdbe00f-6d0e-50d5-90ef-159d6c36baf3",
+      "95aa1380-c5df-5817-b341-d48a16980fb2",
+      "a9622613-5ff0-58eb-9790-2381e0bd9664",
+      "c42e912c-8602-5fc3-ab96-669ae5494153",
+      "dfc8548d-dfcb-5c89-a84f-09e8be562371",
+      "ef7927fa-6194-5d41-b5cb-fe2ec16da8f4"
+    ],
+    "generated_at": "2000-12-26T14:09:22.956523Z",
+    "overview_keys": [
+      "anomaly_context",
+      "assessment_id",
+      "cluster_context",
+      "config_version",
+      "evidence_relationship_count",
+      "evidence_summary",
+      "interpretation",
+      "investigation_path_count",
+      "investigative_priority",
+      "observation_count",
+      "provenance_context",
+      "risk_band",
+      "status",
+      "subject_observation_ids",
+      "subject_profile_id",
+      "temporal_context"
+    ],
+    "path_count": 1,
+    "path_ids_in_order": [
+      "b04d16d2-69fe-57e4-abf0-3003e23a50a9"
+    ],
+    "provenance_keys": [
+      "cited_edge_count",
+      "distinct_source_files",
+      "evidence_citation_ratio",
+      "incident_edge_count",
+      "ingestion_id",
+      "missing_signals",
+      "source_files",
+      "source_records",
+      "temporal_comparability",
+      "temporal_forward_flow"
+    ],
+    "signal_count": 11,
+    "signal_ids_in_order": [
+      "1e15fed3-a3a8-54b6-950f-9d9b8090dbe4",
+      "264bc415-965f-5452-ae5a-2e5ec6317db8",
+      "2cca2580-a6b5-5a0e-beac-6b68db4fa3af",
+      "8148e549-37f9-5e85-9ce5-2a26aac6635d",
+      "9c5dfb97-9acd-59b9-bc55-739eae63f22f",
+      "9dfd8851-0571-52fe-bd52-b3aff84966f2",
+      "9e53cf51-2f30-5456-b3d5-cf49e44e8475",
+      "ab22cac6-d43c-5520-ab0b-7960bb38572f",
+      "d6541edf-0d11-55df-8bf5-39ed0c9c61b1",
+      "d850ea41-396b-505f-81db-99367fa2f4fd",
+      "e9636bec-2ad0-5710-841b-d94bf0be24a8"
+    ],
+    "signal_status_counts": {
+      "PRESENT": 9,
+      "UNAVAILABLE": 2
+    },
+    "version": "STEP9A/1"
+  },
+  "evidence_correlation": {
+    "evidence_type_counts": {
+      "AMOUNT_MATCH": 3,
+      "GEO_COINCIDENCE": 2,
+      "SAME_ADDRESS": 5,
+      "SAME_IP": 5,
+      "SAME_TXID": 2,
+      "TEMPORAL_ADJACENCY": 23
+    },
+    "evidence_types_present": [
+      "AMOUNT_MATCH",
+      "GEO_COINCIDENCE",
+      "SAME_ADDRESS",
+      "SAME_IP",
+      "SAME_TXID",
+      "TEMPORAL_ADJACENCY"
+    ],
+    "inference_level_counts": {
+      "CORRELATED": 40
+    },
+    "inference_levels_present": [
+      "CORRELATED"
+    ],
+    "relationship_count": 40,
+    "relationship_labels": [
+      "6->8/TEMPORAL_ADJACENCY/CORRELATED",
+      "6->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->8/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->4/TEMPORAL_ADJACENCY/CORRELATED",
+      "9->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->6/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->8,9/SAME_ADDRESS/CORRELATED",
+      "4->7/GEO_COINCIDENCE/CORRELATED",
+      "9->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "4->7/AMOUNT_MATCH/CORRELATED",
+      "4->7/SAME_IP/CORRELATED",
+      "8->9/SAME_IP/CORRELATED",
+      "6->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "6->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->6,10,11/SAME_ADDRESS/CORRELATED",
+      "0->11/SAME_ADDRESS/CORRELATED",
+      "8->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->8,9/AMOUNT_MATCH/CORRELATED",
+      "8->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "10->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->7/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->10,11/AMOUNT_MATCH/CORRELATED",
+      "1->8/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->1,6,8,9,10,11/GEO_COINCIDENCE/CORRELATED",
+      "4->7/SAME_ADDRESS/CORRELATED",
+      "5->10/SAME_IP/CORRELATED",
+      "0->6,11/SAME_IP/CORRELATED",
+      "8->9/SAME_ADDRESS/CORRELATED",
+      "1->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "4->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->8,9/SAME_TXID/CORRELATED",
+      "0->10,11/SAME_TXID/CORRELATED",
+      "6->11/SAME_IP/CORRELATED",
+      "0->1/TEMPORAL_ADJACENCY/CORRELATED",
+      "4->7/TEMPORAL_ADJACENCY/CORRELATED",
+      "8->11/TEMPORAL_ADJACENCY/CORRELATED"
+    ],
+    "rules_that_fired": [
+      "amount_match",
+      "geo_coincidence",
+      "same_address",
+      "same_ip",
+      "same_txid",
+      "temporal_adjacency"
+    ]
+  },
+  "evidence_graph": {
+    "degree_counts": {
+      "1": 1,
+      "10": 1,
+      "12": 5,
+      "6": 1,
+      "7": 1,
+      "9": 1
+    },
+    "edge_count": 40,
+    "edge_labels": [
+      "6->8/TEMPORAL_ADJACENCY/CORRELATED",
+      "6->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->8/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->4/TEMPORAL_ADJACENCY/CORRELATED",
+      "9->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->6/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->8,9/SAME_ADDRESS/CORRELATED",
+      "4->7/GEO_COINCIDENCE/CORRELATED",
+      "9->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "4->7/AMOUNT_MATCH/CORRELATED",
+      "4->7/SAME_IP/CORRELATED",
+      "8->9/SAME_IP/CORRELATED",
+      "6->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "6->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->6,10,11/SAME_ADDRESS/CORRELATED",
+      "0->11/SAME_ADDRESS/CORRELATED",
+      "8->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->8,9/AMOUNT_MATCH/CORRELATED",
+      "8->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "10->11/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->7/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->10,11/AMOUNT_MATCH/CORRELATED",
+      "1->8/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->1,6,8,9,10,11/GEO_COINCIDENCE/CORRELATED",
+      "4->7/SAME_ADDRESS/CORRELATED",
+      "5->10/SAME_IP/CORRELATED",
+      "0->6,11/SAME_IP/CORRELATED",
+      "8->9/SAME_ADDRESS/CORRELATED",
+      "1->9/TEMPORAL_ADJACENCY/CORRELATED",
+      "0->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "4->10/TEMPORAL_ADJACENCY/CORRELATED",
+      "1->8,9/SAME_TXID/CORRELATED",
+      "0->10,11/SAME_TXID/CORRELATED",
+      "6->11/SAME_IP/CORRELATED",
+      "0->1/TEMPORAL_ADJACENCY/CORRELATED",
+      "4->7/TEMPORAL_ADJACENCY/CORRELATED",
+      "8->11/TEMPORAL_ADJACENCY/CORRELATED"
+    ],
+    "every_relationship_became_an_edge": true,
+    "isolated_node_count": 0,
+    "node_count": 10,
+    "nodes": [
+      {
+        "degree": 12,
+        "observation_type": "COMBINED",
+        "position": 0
+      },
+      {
+        "degree": 10,
+        "observation_type": "COMBINED",
+        "position": 1
+      },
+      {
+        "degree": 7,
+        "observation_type": "COMBINED",
+        "position": 4
+      },
+      {
+        "degree": 1,
+        "observation_type": "COMBINED",
+        "position": 5
+      },
+      {
+        "degree": 9,
+        "observation_type": "COMBINED",
+        "position": 6
+      },
+      {
+        "degree": 6,
+        "observation_type": "COMBINED",
+        "position": 7
+      },
+      {
+        "degree": 12,
+        "observation_type": "COMBINED",
+        "position": 8
+      },
+      {
+        "degree": 12,
+        "observation_type": "COMBINED",
+        "position": 9
+      },
+      {
+        "degree": 12,
+        "observation_type": "COMBINED",
+        "position": 10
+      },
+      {
+        "degree": 12,
+        "observation_type": "COMBINED",
+        "position": 11
+      }
+    ]
+  },
+  "fusion_priority": {
+    "config_version": "FUSION/1",
+    "contributions": [
+      {
+        "availability": "0",
+        "family": "ANOMALY",
+        "present_count": 0,
+        "total_count": 1,
+        "weight": "0.30"
+      },
+      {
+        "availability": "1",
+        "family": "BEHAVIORAL",
+        "present_count": 1,
+        "total_count": 1,
+        "weight": "0.15"
+      },
+      {
+        "availability": "0",
+        "family": "CLUSTER_CONTEXT",
+        "present_count": 0,
+        "total_count": 1,
+        "weight": "0.05"
+      },
+      {
+        "availability": "1",
+        "family": "EVIDENCE_GRAPH",
+        "present_count": 2,
+        "total_count": 2,
+        "weight": "0.20"
+      },
+      {
+        "availability": "1",
+        "family": "PATH_STRUCTURE",
+        "present_count": 2,
+        "total_count": 2,
+        "weight": "0.10"
+      },
+      {
+        "availability": "1",
+        "family": "PROVENANCE",
+        "present_count": 2,
+        "total_count": 2,
+        "weight": "0.10"
+      },
+      {
+        "availability": "1",
+        "family": "TEMPORAL",
+        "present_count": 1,
+        "total_count": 1,
+        "weight": "0.10"
+      }
+    ],
+    "distinct_relationship_count": 14,
+    "explanation": [
+      {
+        "kind": "CLUSTER_CONTEXT_NOTE",
+        "text": "Cluster membership is descriptive context only: it states which group a profile sits in geometrically and never asserts that its members are the same actor; no relationship or identity claim is created from it."
+      },
+      {
+        "kind": "INFERENCE_LEVEL_NOTE",
+        "text": "Inference levels recorded by earlier steps (OBSERVED, CORRELATED, INFERRED, REQUIRES_VERIFICATION) are carried verbatim through this assessment and are never upgraded because signals agree."
+      },
+      {
+        "kind": "INTERPRETATION_NOTE",
+        "text": "The fused score is a deterministic priority-ranking number in [0, 1] produced by the disclosed weighted formula.  It is not a probability, it is not an accuracy or detection figure, and it asserts no attribution, ownership, identity or guilt."
+      },
+      {
+        "kind": "MISSING_SIGNAL",
+        "text": "Signal ANOMALY_NORMALIZED_SCORE was UNAVAILABLE and therefore contributed nothing; a missing signal is never replaced by a zero.  The anomaly run was fitted but this profile is not part of the scored population, so no score was produced for it."
+      },
+      {
+        "kind": "MISSING_SIGNAL",
+        "text": "Signal CLUSTER_CENTROID_DISTANCE was UNAVAILABLE and therefore contributed nothing; a missing signal is never replaced by a zero.  The clustering run was fitted but this profile is not part of the clustered population, so no assignment exists for it."
+      },
+      {
+        "kind": "OVERLAP_NOTE",
+        "text": "A relationship id may appear in more than one family's lineage; the families are not assumed independent, so counts are reported per family and the same id may be cited in several signals."
+      },
+      {
+        "kind": "SIGNAL_CONTRIBUTION",
+        "text": "Family ANOMALY contributed 0.000000 to the fused score under the disclosed weights (value 0.000000, availability 0.000000, 0 of 1 scoring signals present)."
+      },
+      {
+        "kind": "SIGNAL_CONTRIBUTION",
+        "text": "Family BEHAVIORAL contributed 0.150000 to the fused score under the disclosed weights (value 1.000000, availability 1.000000, 1 of 1 scoring signals present)."
+      },
+      {
+        "kind": "SIGNAL_CONTRIBUTION",
+        "text": "Family CLUSTER_CONTEXT contributed 0.000000 to the fused score under the disclosed weights (value 0.000000, availability 0.000000, 0 of 1 scoring signals present)."
+      },
+      {
+        "kind": "SIGNAL_CONTRIBUTION",
+        "text": "Family EVIDENCE_GRAPH contributed 0.127500 to the fused score under the disclosed weights (value 0.637500, availability 1.000000, 2 of 2 scoring signals present)."
+      },
+      {
+        "kind": "SIGNAL_CONTRIBUTION",
+        "text": "Family PATH_STRUCTURE contributed 0.055000 to the fused score under the disclosed weights (value 0.550000, availability 1.000000, 2 of 2 scoring signals present)."
+      },
+      {
+        "kind": "SIGNAL_CONTRIBUTION",
+        "text": "Family PROVENANCE contributed 0.065000 to the fused score under the disclosed weights (value 0.650000, availability 1.000000, 2 of 2 scoring signals present)."
+      },
+      {
+        "kind": "SIGNAL_CONTRIBUTION",
+        "text": "Family TEMPORAL contributed 0.050000 to the fused score under the disclosed weights (value 0.500000, availability 1.000000, 1 of 1 scoring signals present)."
+      },
+      {
+        "kind": "TOP_CONTRIBUTOR",
+        "text": "The BEHAVIORAL family contributed most to this score, 0.150000; this names the largest disclosed term, not a verdict about the subject."
+      }
+    ],
+    "families_with_no_available_signal": [
+      "ANOMALY",
+      "CLUSTER_CONTEXT"
+    ],
+    "fused_score": "0.6884615384615384615384615384615385",
+    "inference_levels": [
+      "CORRELATED",
+      "INFERRED",
+      "OBSERVED",
+      "REQUIRES_VERIFICATION"
+    ],
+    "interpretation": "The fused score is a deterministic priority-ranking number in [0, 1] produced by the disclosed weighted formula.  It is not a probability, it is not an accuracy or detection figure, and it asserts no attribution, ownership, identity or guilt.",
+    "missing_signals": [
+      {
+        "family": "ANOMALY",
+        "signal_type": "ANOMALY_NORMALIZED_SCORE",
+        "source_step": 6,
+        "status": "UNAVAILABLE"
+      },
+      {
+        "family": "CLUSTER_CONTEXT",
+        "signal_type": "CLUSTER_CENTROID_DISTANCE",
+        "source_step": 6,
+        "status": "UNAVAILABLE"
+      }
+    ],
+    "present_signal_count": 9,
+    "risk_band": "HIGH",
+    "signal_count": 11,
+    "signal_source_steps": {
+      "4": 4,
+      "5": 1,
+      "6": 2,
+      "7": 4
+    },
+    "signal_status_counts": {
+      "PRESENT": 9,
+      "UNAVAILABLE": 2
+    },
+    "signals": [
+      {
+        "evidence_ref_count": 0,
+        "family": "ANOMALY",
+        "inference_levels": [],
+        "role": "PRIORITY_SIGNAL",
+        "signal_type": "ANOMALY_NORMALIZED_SCORE",
+        "source_step": 6,
+        "status": "UNAVAILABLE"
+      },
+      {
+        "evidence_ref_count": 0,
+        "family": "BEHAVIORAL",
+        "inference_levels": [],
+        "role": "EVIDENCE_STRENGTH",
+        "signal_type": "BEHAVIORAL_FEATURE_COVERAGE",
+        "source_step": 5,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 0,
+        "family": "CLUSTER_CONTEXT",
+        "inference_levels": [],
+        "role": "PRIORITY_SIGNAL",
+        "signal_type": "CLUSTER_CENTROID_DISTANCE",
+        "source_step": 6,
+        "status": "UNAVAILABLE"
+      },
+      {
+        "evidence_ref_count": 13,
+        "family": "EVIDENCE_GRAPH",
+        "inference_levels": [
+          "CORRELATED",
+          "INFERRED",
+          "OBSERVED",
+          "REQUIRES_VERIFICATION"
+        ],
+        "role": "PRIORITY_SIGNAL",
+        "signal_type": "EVIDENCE_INCIDENT_COUNT",
+        "source_step": 4,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 13,
+        "family": "EVIDENCE_GRAPH",
+        "inference_levels": [
+          "CORRELATED",
+          "INFERRED",
+          "OBSERVED",
+          "REQUIRES_VERIFICATION"
+        ],
+        "role": "EVIDENCE_STRENGTH",
+        "signal_type": "EVIDENCE_TYPE_DIVERSITY",
+        "source_step": 4,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 2,
+        "family": "PATH_STRUCTURE",
+        "inference_levels": [
+          "CORRELATED"
+        ],
+        "role": "PRIORITY_SIGNAL",
+        "signal_type": "PATH_REACHABILITY_FOUND",
+        "source_step": 7,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 2,
+        "family": "PATH_STRUCTURE",
+        "inference_levels": [
+          "CORRELATED"
+        ],
+        "role": "PRIORITY_SIGNAL",
+        "signal_type": "PATH_STRUCTURE_COUNT",
+        "source_step": 7,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 13,
+        "family": "PROVENANCE",
+        "inference_levels": [
+          "CORRELATED",
+          "INFERRED",
+          "OBSERVED",
+          "REQUIRES_VERIFICATION"
+        ],
+        "role": "EVIDENCE_STRENGTH",
+        "signal_type": "PROVENANCE_CITED_EDGE_RATIO",
+        "source_step": 4,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 13,
+        "family": "PROVENANCE",
+        "inference_levels": [
+          "CORRELATED",
+          "INFERRED",
+          "OBSERVED",
+          "REQUIRES_VERIFICATION"
+        ],
+        "role": "EVIDENCE_STRENGTH",
+        "signal_type": "PROVENANCE_SOURCE_FILE_DIVERSITY",
+        "source_step": 4,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 2,
+        "family": "TEMPORAL",
+        "inference_levels": [
+          "CORRELATED"
+        ],
+        "role": "EVIDENCE_STRENGTH",
+        "signal_type": "TEMPORAL_COMPARABILITY",
+        "source_step": 7,
+        "status": "PRESENT"
+      },
+      {
+        "evidence_ref_count": 2,
+        "family": "TEMPORAL",
+        "inference_levels": [
+          "CORRELATED"
+        ],
+        "role": "CONTEXT_ONLY",
+        "signal_type": "TEMPORAL_FORWARD_FLOW",
+        "source_step": 7,
+        "status": "PRESENT"
+      }
+    ],
+    "status": "COMPUTED"
+  },
+  "ingestion_normalization": {
+    "awareness_counts": {
+      "ABSENT": 1,
+      "AWARE": 9,
+      "NAIVE": 2
+    },
+    "files": [
+      {
+        "detected_format": "csv",
+        "duplicate_count": 0,
+        "error_codes": [],
+        "error_count": 0,
+        "file": "flow_combined.csv",
+        "observation_types": [
+          "BLOCKCHAIN",
+          "COMBINED"
+        ],
+        "raw_record_count": 8,
+        "record_count": 8,
+        "source_bytes_unchanged": true,
+        "warning_codes": [
+          "NAIVE_TIMESTAMP"
+        ],
+        "warning_count": 1
+      },
+      {
+        "detected_format": "json",
+        "duplicate_count": 0,
+        "error_codes": [],
+        "error_count": 0,
+        "file": "flow_records.json",
+        "observation_types": [
+          "COMBINED"
+        ],
+        "raw_record_count": 2,
+        "record_count": 2,
+        "source_bytes_unchanged": true,
+        "warning_codes": [
+          "NAIVE_TIMESTAMP"
+        ],
+        "warning_count": 1
+      },
+      {
+        "detected_format": "xml",
+        "duplicate_count": 0,
+        "error_codes": [],
+        "error_count": 0,
+        "file": "flow_records.xml",
+        "observation_types": [
+          "BLOCKCHAIN",
+          "COMBINED"
+        ],
+        "raw_record_count": 2,
+        "record_count": 2,
+        "source_bytes_unchanged": true,
+        "warning_codes": [],
+        "warning_count": 0
+      }
+    ],
+    "observation_shape": [
+      {
+        "corpus_index": 0,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "csv",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 1,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "xml",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 2,
+        "error_codes": [],
+        "has_src_ip": false,
+        "has_txid": true,
+        "observation_type": "BLOCKCHAIN",
+        "source_format": "csv",
+        "warning_codes": [
+          "NAIVE_TIMESTAMP"
+        ]
+      },
+      {
+        "corpus_index": 3,
+        "error_codes": [],
+        "has_src_ip": false,
+        "has_txid": true,
+        "observation_type": "BLOCKCHAIN",
+        "source_format": "xml",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 4,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "csv",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 5,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "json",
+        "warning_codes": [
+          "NAIVE_TIMESTAMP"
+        ]
+      },
+      {
+        "corpus_index": 6,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "csv",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 7,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "csv",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 8,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "csv",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 9,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "csv",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 10,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "json",
+        "warning_codes": []
+      },
+      {
+        "corpus_index": 11,
+        "error_codes": [],
+        "has_src_ip": true,
+        "has_txid": true,
+        "observation_type": "COMBINED",
+        "source_format": "csv",
+        "warning_codes": []
+      }
+    ],
+    "summary": {
+      "classification_counts": {
+        "BLOCKCHAIN": 2,
+        "COMBINED": 10
+      },
+      "distinct_observation_ids": 12,
+      "files_ingested": 3,
+      "formats": [
+        "csv",
+        "json",
+        "xml"
+      ],
+      "observations_with_errors": 0,
+      "observations_with_naive_timestamp": 0,
+      "observations_with_warnings": 2,
+      "observations_without_timestamp": 1,
+      "total_observations": 12
+    }
+  },
+  "ml_determinism": {
+    "anomaly": {
+      "algorithm": "ISOLATION_FOREST",
+      "algorithm_version": "ISOLATION_FOREST_STDLIB/2",
+      "band_boundaries": [
+        "0.5",
+        "0.7",
+        "0.9"
+      ],
+      "band_counts": {
+        "LOW": 8,
+        "MODERATE": 4
+      },
+      "bands_by_population_index": [
+        {
+          "band": "LOW",
+          "population_index": 0
+        },
+        {
+          "band": "LOW",
+          "population_index": 1
+        },
+        {
+          "band": "LOW",
+          "population_index": 2
+        },
+        {
+          "band": "LOW",
+          "population_index": 3
+        },
+        {
+          "band": "LOW",
+          "population_index": 4
+        },
+        {
+          "band": "LOW",
+          "population_index": 5
+        },
+        {
+          "band": "LOW",
+          "population_index": 6
+        },
+        {
+          "band": "LOW",
+          "population_index": 7
+        },
+        {
+          "band": "MODERATE",
+          "population_index": 8
+        },
+        {
+          "band": "MODERATE",
+          "population_index": 9
+        },
+        {
+          "band": "MODERATE",
+          "population_index": 10
+        },
+        {
+          "band": "MODERATE",
+          "population_index": 11
+        }
+      ],
+      "feature_schema_id": "SCHEMA_BD07A89425E6B4E5",
+      "imputation": "FITTED_MEDIAN",
+      "random_state": 0,
+      "scaling": "ROBUST_MAD",
+      "status": "FITTED"
+    },
+    "clustering": {
+      "algorithm": "K_MEANS",
+      "algorithm_version": "KMEANS_STDLIB/1",
+      "cluster_by_population_index": [
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 0
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 1
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 2
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 3
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 4
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 5
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 6
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "is_noise": false,
+          "population_index": 7
+        },
+        {
+          "cluster_id": "CLUSTER_000",
+          "is_noise": false,
+          "population_index": 8
+        },
+        {
+          "cluster_id": "CLUSTER_000",
+          "is_noise": false,
+          "population_index": 9
+        },
+        {
+          "cluster_id": "CLUSTER_000",
+          "is_noise": false,
+          "population_index": 10
+        },
+        {
+          "cluster_id": "CLUSTER_000",
+          "is_noise": false,
+          "population_index": 11
+        }
+      ],
+      "cluster_count": 2,
+      "cluster_ids": [
+        "CLUSTER_000",
+        "CLUSTER_001"
+      ],
+      "clusters": [
+        {
+          "cluster_id": "CLUSTER_000",
+          "features_above_reference": [
+            "maximum_amount",
+            "mean_amount",
+            "median_amount",
+            "minimum_amount",
+            "total_input_amount",
+            "total_output_amount"
+          ],
+          "member_population_indices": [
+            8,
+            9,
+            10,
+            11
+          ],
+          "signature": "2c602aa62a58172c0f68c855322efa59a38280e0076934fa37e81012313a1543"
+        },
+        {
+          "cluster_id": "CLUSTER_001",
+          "features_above_reference": [],
+          "member_population_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "signature": "adeac39fbeb7ac9dd964da824258b6a5cf88dcf46ac37862079050171ff85897"
+        }
+      ],
+      "feature_schema_id": "SCHEMA_BD07A89425E6B4E5",
+      "k": 2,
+      "noise_profile_count": 0,
+      "random_state": 0,
+      "status": "FITTED"
+    },
+    "feature_name_count": 52,
+    "population_size": 12
+  },
+  "path_determinism": {
+    "max_hop_count": 5,
+    "searches": {
+      "bounded_enumeration": {
+        "incomparable_exclusions": 0,
+        "path_count": 10,
+        "paths": [
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->4->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->4 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "4->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD BEFORE comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->8->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->8 SAME_ADDRESS/CORRELATED/FORWARD BEFORE comparable=True",
+              "8->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->9->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->9 SAME_ADDRESS/CORRELATED/FORWARD BEFORE comparable=True",
+              "9->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->9->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->9 SAME_ADDRESS/CORRELATED/FORWARD BEFORE comparable=True",
+              "9->10 AMOUNT_MATCH/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->8->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->8 AMOUNT_MATCH/CORRELATED/FORWARD BEFORE comparable=True",
+              "8->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->9->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->9 AMOUNT_MATCH/CORRELATED/FORWARD BEFORE comparable=True",
+              "9->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->9->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->9 AMOUNT_MATCH/CORRELATED/FORWARD BEFORE comparable=True",
+              "9->10 AMOUNT_MATCH/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->8->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->8 TEMPORAL_ADJACENCY/CORRELATED/FORWARD BEFORE comparable=True",
+              "8->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->9->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->9 TEMPORAL_ADJACENCY/CORRELATED/FORWARD BEFORE comparable=True",
+              "9->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          },
+          {
+            "duration_seconds": null,
+            "hop_count": 5,
+            "nodes": "6->0->1->8->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->0 TEMPORAL_ADJACENCY/CORRELATED/REVERSE AFTER comparable=True",
+              "0->1 GEO_COINCIDENCE/CORRELATED/FORWARD AFTER comparable=True",
+              "1->8 SAME_TXID/CORRELATED/FORWARD BEFORE comparable=True",
+              "8->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          }
+        ],
+        "shortest_hops": 5,
+        "status": "FOUND",
+        "temporal_exclusions": 0
+      },
+      "shortest": {
+        "incomparable_exclusions": 0,
+        "path_count": 1,
+        "paths": [
+          {
+            "duration_seconds": null,
+            "hop_count": 2,
+            "nodes": "6->10->5",
+            "temporal_status": "PARTIALLY_COMPARABLE",
+            "transitions": [
+              "6->10 TEMPORAL_ADJACENCY/CORRELATED/FORWARD AFTER comparable=True",
+              "10->5 SAME_IP/CORRELATED/REVERSE NOT_COMPARABLE comparable=False"
+            ]
+          }
+        ],
+        "shortest_hops": 2,
+        "status": "FOUND",
+        "temporal_exclusions": 0
+      }
+    },
+    "temporal_comparison": [
+      {
+        "case": "comparable_temporal_data",
+        "comparable": true,
+        "elapsed_seconds": "1800.0",
+        "relation": "AFTER"
+      },
+      {
+        "case": "not_comparable_temporal_data",
+        "comparable": false,
+        "elapsed_seconds": null,
+        "relation": "NOT_COMPARABLE"
+      },
+      {
+        "case": "missing_temporal_data",
+        "comparable": false,
+        "elapsed_seconds": null,
+        "relation": "UNKNOWN"
+      }
+    ],
+    "total_paths_found": 11
+  }
+}

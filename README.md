@@ -198,10 +198,14 @@ connected machine.
 
 4. **Run the FastAPI server**
    ```bash
-   uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
+   python -m uvicorn backend.app.main:app --reload
    ```
-   Then open `http://127.0.0.1:8000/docs` for the API browser, or serve
-   `frontend/index.html` against the same origin.
+   Then open `http://127.0.0.1:8000/` for the Investigator Dashboard demo. The
+   backend serves `frontend/` from the same origin, so the page and its
+   `/api/dashboard/*` calls work in a normal browser tab; do not open
+   `frontend/index.html` from the filesystem, because browsers refuse to load its
+   ES modules over `file://`. `http://127.0.0.1:8000/docs` remains the API browser
+   and `/api/welcome` the original backend greeting.
 
 5. **Run the test suite**
    ```bash
@@ -227,7 +231,8 @@ builder, and the runtime stage copies only the virtual environment, `backend/` a
 `evaluation/`. It runs as an unprivileged user (`uid 10001`, `nologin`), sets
 `PYTHONHASHSEED=0` so set iteration order cannot break determinism, and declares a
 `HEALTHCHECK` against `/health`. Tests, the frontend and documentation are excluded
-from the image via `.dockerignore`.
+from the image via `.dockerignore`, so the container serves the JSON API only and its
+root answers with the backend greeting rather than the dashboard page.
 
 To verify the evaluation runs inside the image with no network at all:
 

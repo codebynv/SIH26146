@@ -1,0 +1,113 @@
+﻿.graph-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.graph-svg { width: 100%; height: 100%; display: block; }
+
+.graph-node {
+  cursor: pointer;
+  transition: filter var(--transition-fast), r var(--transition-fast);
+}
+.graph-node:hover { filter: brightness(1.2); }
+.graph-node--subject { filter: drop-shadow(0 0 4px var(--accent-primary)); }
+.graph-node--subject .graph-node__circle { stroke: var(--accent-primary); stroke-width: 2; }
+.graph-node--neighbor { opacity: 0.7; }
+.graph-node--neighbor .graph-node__circle { stroke: var(--border); stroke-width: 1; }
+.graph-node__circle { fill: var(--bg-card); transition: stroke var(--transition-fast); }
+.graph-node__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--text-secondary);
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: hanging;
+}
+.graph-node--subject .graph-node__label { fill: var(--accent-primary); font-weight: 600; }
+
+.graph-edge {
+  /* Step 9B Phase 3: an edge is selectable, so the pointer must reach it. Only
+     the stroke itself is hit, which keeps the empty area between edges
+     transparent to clicks on the nodes underneath. */
+  pointer-events: stroke;
+  transition: stroke-width var(--transition-fast);
+}
+.graph-edge:hover { stroke-width: 3; }
+.graph-edge--observed { stroke: var(--inference-observed); }
+.graph-edge--correlated { stroke: var(--inference-correlated); }
+.graph-edge--inferred { stroke: var(--inference-inferred); stroke-dasharray: 4 2; }
+.graph-edge--requires { stroke: var(--inference-requires); stroke-dasharray: 2 2; }
+.graph-edge--incident { stroke-width: 2; }
+.graph-edge--context { stroke-width: 1; opacity: 0.5; }
+
+.graph-edge__arrow {
+  fill: none;
+  stroke: inherit;
+  stroke-width: inherit;
+}
+
+.graph-controls {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  display: flex;
+  gap: var(--spacing-xs);
+  z-index: 10;
+}
+
+.graph-zoom {
+  position: absolute;
+  bottom: var(--spacing-sm);
+  left: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.graph-legend {
+  position: absolute;
+  bottom: var(--spacing-sm);
+  right: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+}
+
+.graph-legend__item { display: flex; align-items: center; gap: var(--spacing-xs); }
+.graph-legend__swatch { width: 16px; height: 2px; border-radius: 1px; }
+
+.graph-tooltip {
+  position: absolute;
+  pointer-events: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 11px;
+  max-width: 280px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  z-index: 100;
+}
+.graph-tooltip.visible { opacity: 1; }
+.graph-tooltip__title { font-weight: 600; margin-bottom: var(--spacing-xs); }
+.graph-tooltip__row { display: flex; justify-content: space-between; gap: var(--spacing-md); margin: 2px 0; }
+.graph-tooltip__label { color: var(--text-muted); }
+.graph-tooltip__value { font-family: var(--font-mono); text-align: right; }

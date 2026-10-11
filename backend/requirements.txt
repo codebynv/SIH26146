@@ -1,0 +1,19 @@
+# BitTrace AI backend runtime dependencies.
+#
+# Pinned to the versions the Step 10 evaluation was verified against. An
+# unpinned list makes a container build resolve to whatever is newest on the day
+# of the build, so a passing local run and a failing deployed image can come
+# from the same commit.
+#
+# Direct dependencies only; transitive pins are omitted on purpose so patch
+# releases still flow through, and pip's resolver has a chance to detect a
+# genuine incompatibility instead of being pinned into a broken pair.
+
+fastapi==0.141.1
+uvicorn[standard]==0.52.1
+pydantic==2.13.4
+python-multipart==0.0.32
+
+# httpx is a runtime dependency of FastAPI's TestClient, which the Step 9A and
+# Step 10 suites drive the application through.
+httpx==0.28.1
